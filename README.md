@@ -1,5 +1,4 @@
 # music-reviews
-# Music review app using the Spotify API
 
 ## Setup
 
@@ -30,4 +29,13 @@ Then create a local ".env" file and provide the keys like this:
 
 CLIENT_ID="__________________"
 CLIENT_SECRET="__________________"
+```
+
+## Usage
+
+
+Run the music review app:
+
+```sh
+python -m app.music_reviews
 ```
