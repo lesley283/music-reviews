@@ -23,8 +23,7 @@ auth_url = 'https://accounts.spotify.com/api/token'
 auth_response = requests.post(auth_url, {
     'grant_type': 'client_credentials',
     'client_id': CLIENT_ID,
-    'client_secret': CLIENT_SECRET,
-})
+    'client_secret': CLIENT_SECRET, })
 
 # convert the response to JSON
 auth_response_data = auth_response.json()
@@ -40,20 +39,20 @@ headers = {
 BASE_URL = 'https://api.spotify.com/v1/'
 
 
-def song_input():
-    #"""
-    #Ask user for song to review and return correct song information.
-
-    #Param: none
-
-    #Returns: song information including title, artist, album title, and album artwork
-    #"""
-    song = input(
-        "Please input the title of the song you would like to review: ")
+def fetch_spotify_data(song):
+    """Fetches song data from the Spotify API. Returns a dictionary."""
     response = requests.get(BASE_URL + 'search?q=' +
                             song + '&type=track&limit=20', headers=headers)
-
     data = json.loads(response.text)
+    return data
+
+
+if __name__ == "__main__":
+
+    song = input(
+        "Please input the title of the song you would like to review: ")
+
+    data = fetch_spotify_data(song)
 
     # Cleaning the data
     song_ids = []
@@ -80,7 +79,7 @@ def song_input():
 
     while True:
         artist = input(
-            "Please input the artist of the correct song you want to review (with correct capitalization). If you do not see the correct song in the list, enter 'NA': ")
+            "Please input the artist of the correct song you want to review (with correct capitalization).")
         if artist == "NA":
             break
         elif artist in artist_name:
@@ -94,55 +93,42 @@ def song_input():
 
         song_info = {"title": song_names[index], "track id": song_ids[index],
                      "artist": artist_name[index], "album": album_name[index], "art": album_art[index]}
-        return song_info
 
-    if artist == "NA":
-        print("You have indicated that the correct song you want to review is not listed. Please input the song title again, perhaps using different keywords.")
-        return None
+    # output the chosen song's information
 
+    print("You have selected the following song to review...")
+    print("SONG TITLE: " + song_info["title"])
+    print("ARTIST: " + song_info["artist"])
+    print("ALBUM TITLE: " + song_info["album"])
 
-# call the song input function
-chosen_song = None
-while chosen_song == None:
-    chosen_song = song_input()
+    # display album image
+    image_url = song_info["art"]
+    display(Image(url=image_url))
 
-# output the chosen song's information
+    # ADD A REVIEW
+    user_review = input("Please write your review for " +
+                        song_info["title"].upper() + ": ")
 
-print("You have selected the following song to review...")
-print("SONG TITLE: " + chosen_song["title"])
-print("ARTIST: " + chosen_song["artist"])
-print("ALBUM TITLE: " + chosen_song["album"])
+    test = True
+    while test == True:
+        user_rating = input(
+            "Please rate the song using a value from 1 to 5 (with 5 being the best): ")
+        try:
+            user_rating = int(user_rating)
+        except ValueError:
+            print("Please make sure you are inputting an integer value.")
+            continue
+        if user_rating < 1 or user_rating > 5:
+            print("Please make sure you are entering a value between 1 and 5.")
+            continue
+        test = False
 
-# display album image
-image_url = chosen_song["art"]
-display(Image(url=image_url))
+    user_name = input("Please input your name: ")
 
-# ADD A REVIEW
-user_review = input("Please write your review for " +
-                    chosen_song["title"].upper() + ": ")
+    # Create a list of dictionaries with past reviews...
+    song_info.update(
+        {'review': user_review, 'rating': user_rating, 'user': user_name})
+    all_reviews = []
+    all_reviews.append(song_info)
 
-test = True
-while test == True:
-    user_rating = input(
-        "Please rate the song using a value from 1 to 5 (with 5 being the best): ")
-    try:
-        user_rating = int(user_rating)
-    except ValueError:
-        print("Please make sure you are inputting an integer value.")
-        continue
-
-    if user_rating < 1 or user_rating > 5:
-        print("Please make sure you are entering a value between 1 and 5.")
-        continue
-
-    test = False
-
-user_name = input("Please input your name: ")
-
-# Create a list of dictionaries with past reviews...
-chosen_song.update(
-    {'review': user_review, 'rating': user_rating, 'user': user_name})
-all_reviews = []
-all_reviews.append(chosen_song)
-
-print("Thanks! Your review has been submitted.")
+    print("Thanks! Your review has been submitted.")
