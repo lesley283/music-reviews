@@ -1,0 +1,19 @@
+{% extends "bootstrap_5_layout.html" %}
+{% set active_page = "reviews_list" %}
+
+{% block content %}
+
+    <h2>Here are a list of songs that might fit your search criteria...</h2>
+
+    {% for result in song_list %}
+    <tr>
+        <td>{{ result[0] }}</td> by
+        <td>{{ result[1] }}</td></a>
+        <br>
+    </tr>
+    {% endfor %}
+
+
+{% endblock %}
+
+</p>

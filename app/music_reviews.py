@@ -9,38 +9,32 @@
 import requests
 import json
 from IPython.display import Image, display
-import os
-from dotenv import load_dotenv
-
-load_dotenv()  # look in the ".env" file for env vars
-
-CLIENT_ID = os.getenv("CLIENT_ID")
-CLIENT_SECRET = os.getenv("CLIENT_SECRET")
-
-auth_url = 'https://accounts.spotify.com/api/token'
-
-# POST request
-auth_response = requests.post(auth_url, {
-    'grant_type': 'client_credentials',
-    'client_id': CLIENT_ID,
-    'client_secret': CLIENT_SECRET, })
-
-# convert the response to JSON
-auth_response_data = auth_response.json()
-
-# save the access token
-access_token = auth_response_data['access_token']
-
-headers = {
-    'Authorization': 'Bearer {token}'.format(token=access_token)
-}
-
-# base URL of all Spotify API endpoints
-BASE_URL = 'https://api.spotify.com/v1/'
-
+from app.spotify import CLIENT_ID, CLIENT_SECRET
 
 def fetch_spotify_data(song):
     """Fetches song data from the Spotify API. Returns a dictionary."""
+
+    auth_url = 'https://accounts.spotify.com/api/token'
+
+    # POST request
+    auth_response = requests.post(auth_url, {
+        'grant_type': 'client_credentials',
+        'client_id': CLIENT_ID,
+        'client_secret': CLIENT_SECRET, })
+
+    # convert the response to JSON
+    auth_response_data = auth_response.json()
+
+    # save the access token
+    access_token = auth_response_data['access_token']
+
+    headers = {
+        'Authorization': 'Bearer {token}'.format(token=access_token)
+    }
+
+    # base URL of all Spotify API endpoints
+    BASE_URL = 'https://api.spotify.com/v1/'
+
     response = requests.get(BASE_URL + 'search?q=' +
                             song + '&type=track&limit=20', headers=headers)
     data = json.loads(response.text)
@@ -49,8 +43,7 @@ def fetch_spotify_data(song):
 
 if __name__ == "__main__":
 
-    song = input(
-        "Please input the title of the song you would like to review: ")
+    song = input("Please input the title of the song you would like to review: ")
 
     data = fetch_spotify_data(song)
 
@@ -79,7 +72,7 @@ if __name__ == "__main__":
 
     while True:
         artist = input(
-            "Please input the artist of the correct song you want to review (with correct capitalization).")
+            "Please input the artist of the correct song you want to review (with correct capitalization): ")
         if artist == "NA":
             break
         elif artist in artist_name:
