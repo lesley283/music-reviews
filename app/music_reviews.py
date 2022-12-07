@@ -79,13 +79,10 @@ if __name__ == "__main__":
     while True:
         artist = input(
             "Please input the artist of the correct song you want to review (with correct capitalization): ")
-        if artist == "NA":
-            break
-        elif artist in artist_name:
+        if artist in artist_name:
             break
         else:
-            print(
-                "Sorry, that artist was not found. Please make sure you have used the correct capitalization.")
+            print("Sorry, that artist was not found. Please make sure you have used the correct capitalization.")
 
     if artist in artist_name:
         index = artist_name.index(artist)
