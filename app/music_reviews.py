@@ -11,6 +11,7 @@ import json
 from IPython.display import Image, display
 import os
 from dotenv import load_dotenv
+import pickle
 
 load_dotenv()  # look in the ".env" file for env vars
 
@@ -41,11 +42,9 @@ BASE_URL = 'https://api.spotify.com/v1/'
 
 def fetch_spotify_data(song):
     """Fetches song data from the Spotify API. Returns a dictionary."""
-    response = requests.get(BASE_URL + 'search?q=' +
-                            song + '&type=track&limit=20', headers=headers)
+    response = requests.get(BASE_URL + 'search?q=' + song + '&type=track&limit=20', headers=headers)
     data = json.loads(response.text)
     return data
-
 
 if __name__ == "__main__":
 
@@ -79,7 +78,7 @@ if __name__ == "__main__":
 
     while True:
         artist = input(
-            "Please input the artist of the correct song you want to review (with correct capitalization).")
+            "Please input the artist of the correct song you want to review (with correct capitalization): ")
         if artist == "NA":
             break
         elif artist in artist_name:
@@ -125,10 +124,21 @@ if __name__ == "__main__":
 
     user_name = input("Please input your name: ")
 
-    # Create a list of dictionaries with past reviews...
-    song_info.update(
-        {'review': user_review, 'rating': user_rating, 'user': user_name})
+    # update song info with review information
+    song_info.update({'review': user_review, 'rating': user_rating, 'user': user_name})
+
+    # open a pickle file
+    filename = 'reviews.pk'
+
     all_reviews = []
+
+    if os.path.exists(filename):
+        with open(filename, 'rb') as rfp:
+            all_reviews = pickle.load(rfp)
+
     all_reviews.append(song_info)
+
+    with open(filename, 'wb') as wfp:
+        pickle.dump(all_reviews, wfp)
 
     print("Thanks! Your review has been submitted.")
