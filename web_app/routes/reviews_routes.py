@@ -83,7 +83,7 @@ def review_form():
         print('OOPS', err)
 
         #flash("Market Data Error. Please check your symbol and try again!", "danger")
-        return redirect("/add-review/list")
+        return redirect("/add-review")
 
 
 @reviews_routes.route("/add-review/submit", methods=["GET", "POST"])
@@ -111,7 +111,7 @@ def submit_form():
                  "album": album, "review": review, "rating": rating, "user": user}
 
     open_pickle_file(song_info=song_info)
-    
+
     try:
         return render_template("submit_form.html",
                                )
@@ -119,4 +119,4 @@ def submit_form():
         print('OOPS', err)
 
         #flash("Market Data Error. Please check your symbol and try again!", "danger")
-        return redirect("/add-review/form")
+        return redirect("/add-review")

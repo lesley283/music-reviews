@@ -62,10 +62,13 @@ def search_validation():
         users = reverse_list(match_user)
         title = reverse_list(song_title)
 
-        #flash("Fetched Real-time Market Data!", "success")
-        return render_template("search_output.html",
+        try:
+            return render_template("search_output.html",
                                 name=name,
                                 review_level=review_level,
                                 rating_output=rating_output,
                                 review_list=zip(reviews, ratings, users, title)
                                 )
+        except Exception as err:
+            print('OOPs', err)
+            return redirect("/search-review")
