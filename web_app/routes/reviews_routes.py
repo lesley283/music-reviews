@@ -99,6 +99,7 @@ def submit_form():
         request_data = dict(request.args)
         print("URL PARAMS:", request_data)
 
+
     review = request.form['review']
     rating = request.form['rating']
     user = request.form['username']
@@ -110,7 +111,7 @@ def submit_form():
                  "album": album, "review": review, "rating": rating, "user": user}
 
     open_pickle_file(song_info=song_info)
-
+    
     try:
         return render_template("submit_form.html",
                                )
