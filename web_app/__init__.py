@@ -9,7 +9,7 @@ from web_app.routes.reviews_routes import reviews_routes
 
 from web_app.routes.search_routes import search_routes
 load_dotenv()
-SECRET_KEY = os.getenv("SECRET_KEY", default="super secret") # set this to something else on production!!!
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 
 def create_app():
