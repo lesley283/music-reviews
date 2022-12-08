@@ -1,0 +1,35 @@
+{% extends "bootstrap_5_layout.html" %}
+{% set active_page = "home" %}
+
+{% block content %}
+
+    <h1>Welcome!</h1>
+
+    <p>This website will allow you to write and look at reviews for Spotify songs.</p>
+
+
+    <h1>Here's how to get started...</h1>
+
+    <p><a href="/add-review">Add a review</a></p>
+    <p><a href="/search-review">Search a review</a></p>
+
+     <header style="margin-top:2em; margin-bottom:2em;"></header>
+
+     <!-- SEE: https://getbootstrap.com/docs/5.2/components/carousel/ -->
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://image.adsoftheworld.com/kie1peb6vorw1r97s10ktvvfro14" class="d-block w-100" alt="...">
+            </div>
+
+            <div class="carousel-item">
+                <img src="https://www.billboard.com/wp-content/uploads/media/01-Spotify-Everywhere-campaign-press-2019-billboard-1548.jpg?w=1024" class="d-block w-100" alt="...">
+            </div>
+
+            <div class="carousel-item">
+                <img src="https://www.billboard.com/wp-content/uploads/media/03-Spotify-Everywhere-campaign-press-2019-billboard-1548.jpg?w=1024" class="d-block w-100" alt="...">
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

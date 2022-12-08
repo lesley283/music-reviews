@@ -1,0 +1,20 @@
+{% extends "bootstrap_5_layout.html" %}
+{% set active_page = "song_form" %}
+
+{% block content %}
+
+    <h2>Song Review Form</h2>
+
+    <p>Input a song you would like to review...</p>
+
+    <form action="/add-review/list" method="POST">
+
+        <label>Song Input:</label>
+        <input type="text" name="song" placeholder="Lavender Haze" value="Lavender Haze">
+        <br>
+        <br>
+
+        <button class="btn btn-success">Submit</button>
+    </form>
+
+{% endblock %}
