@@ -11,6 +11,7 @@ import json
 from IPython.display import Image, display
 import os
 from dotenv import load_dotenv
+import pickle
 
 load_dotenv()  # look in the ".env" file for env vars
 
@@ -39,14 +40,15 @@ headers = {
 BASE_URL = 'https://api.spotify.com/v1/'
 
 def fetch_spotify_data(song):
-     """Fetches song data from the Spotify API. Returns a dictionary."""
-     response = requests.get(BASE_URL + 'search?q=' + song + '&type=track&limit=20', headers=headers)
-     data = json.loads(response.text)
-     return data
+    """Fetches song data from the Spotify API. Returns a dictionary."""
+    response = requests.get(BASE_URL + 'search?q=' + song + '&type=track&limit=20', headers=headers)
+    data = json.loads(response.text)
+    return data
 
 if __name__ == "__main__":
 
-    song = input("Please input the title of the song you would like to review: ")
+    song = input(
+        "Please input the title of the song you would like to review: ")
 
     data = fetch_spotify_data(song)
 
@@ -75,14 +77,11 @@ if __name__ == "__main__":
 
     while True:
         artist = input(
-            "Please input the artist of the correct song you want to review (with correct capitalization).")
-        if artist == "NA":
-            break
-        elif artist in artist_name:
+            "Please input the artist of the correct song you want to review (with correct capitalization): ")
+        if artist in artist_name:
             break
         else:
-            print(
-                "Sorry, that artist was not found. Please make sure you have used the correct capitalization.")
+            print("Sorry, that artist was not found. Please make sure you have used the correct capitalization.")
 
     if artist in artist_name:
         index = artist_name.index(artist)
@@ -102,13 +101,16 @@ if __name__ == "__main__":
     display(Image(url=image_url))
 
     # ADD A REVIEW
-    user_review = input("Please write your review for " + song_info["title"].upper() + ": ")
+    
+    user_review = input("Please write your review for " +
+                        song_info["title"].upper() + ": ")
 
     test = True
     while test == True:
-        user_rating = input("Please rate the song using a value from 1 to 5 (with 5 being the best): ")
+        user_rating = input(
+            "Please rate the song using a value from 1 to 5 (with 5 being the best): ")
         try:
-                user_rating = int(user_rating)
+            user_rating = int(user_rating)
         except ValueError:
             print("Please make sure you are inputting an integer value.")
             continue
@@ -119,9 +121,21 @@ if __name__ == "__main__":
 
     user_name = input("Please input your name: ")
 
-    # Create a list of dictionaries with past reviews...
+    # update song info with review information
     song_info.update({'review': user_review, 'rating': user_rating, 'user': user_name})
+
+    # open a pickle file
+    filename = 'reviews.pk'
+
     all_reviews = []
+
+    if os.path.exists(filename):
+        with open(filename, 'rb') as rfp:
+            all_reviews = pickle.load(rfp)
+
     all_reviews.append(song_info)
+
+    with open(filename, 'wb') as wfp:
+        pickle.dump(all_reviews, wfp)
 
     print("Thanks! Your review has been submitted.")

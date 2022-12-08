@@ -2,89 +2,57 @@
 
 # Allows user to search reviews and view average ratings
 
-from app.music_reviews import all_reviews
+import pickle
+from itertools import islice
 
-# Finding average user rating
+def reverse_list(original_list):
+    """Return newest 5 reviews by reversing list"""
+    new_list = list(islice(reversed(original_list), 0, 5))
+    return new_list
 
-while True:
-    avg_input = input(
-        "Please input at what level you would like to view reviews for: 'song', 'artist', or 'album': ")
-    if avg_input.lower() == "song":
-        break
-    elif avg_input.lower() == "artist":
-        break
-    elif avg_input.lower() == "album":
-        break
-    else:
-        print("Please make sure your input is one of the following, 'song', 'artist', or 'album'.")
+if __name__ == "__main__":
 
-##### NEED TO REFACTOR CODE #####
-avg_rating = []
-match_reviews = []
-match_user = []
-if avg_input.lower() == "song":
-    avg_song = input(
-        "What song would you like to view the average rating for? ")
+    while True:
+        avg_input = input("Please input at what level you would like to view reviews for: 'song', 'artist', or 'album': ").lower()
+        avg_input = avg_input.lower()
+        if avg_input == "song" or avg_input == "artist" or avg_input == "album":
+            break
+        else:
+            print("Please make sure your input is one of the following, 'song', 'artist', or 'album'.")
+
+    avg_rating = []
+    match_reviews = []
+    match_user = []
+
+    # load data from pickle file back to memory
+    with open('reviews.pk', 'rb') as rfp:
+        all_reviews = pickle.load(rfp)
+
+    search_input = input("What " + avg_input + " would you like to view the average rating for? ").lower()
     for review in all_reviews:
-        if review["title"].lower() == avg_song.lower():
+        if search_input == review["title"].lower() or search_input == review["artist"].lower() or search_input == review["album"].lower():
             avg_rating.append(review["rating"])
             match_reviews.append(review["review"])
             match_user.append(review["user"])
-    if not avg_rating:
-        print("There seems to be no reviews for that particular song. Please make sure you have entered the title correctly, or leave a review for that song!")
-    else:
-        rating_output = sum(avg_rating) / len(avg_rating)
-        print("Here is the average rating for " + avg_song.upper() +
-              " based on all user reviews: " + str(rating_output))
+        if not avg_rating:
+            print("There seems to be no reviews for that particular " + avg_input + ". Please make sure you have entered the name correctly or leave a review yourself!")
+            quit()
+
+
+    rating_output = sum(avg_rating) / len(avg_rating)
+    print("Here is the average rating for " + search_input.upper() + " based on all user reviews: " + str(rating_output))
+    print("Here are a list of recent reviews...")
+    print("-------------------")
+
+    # reverse list (since most recent reviews are at the back of the list)
+    reviews = reverse_list(match_reviews)
+    ratings = reverse_list(avg_rating)
+    users = reverse_list(match_user)
+
+    count = 0
+    while count <= 5 and count <= (len(match_reviews) - 1):
+        print("Reviews: " + reviews[count])
+        print("Rating: " + str(ratings[count]))
+        print("User: " + users[count])
         print("-------------------")
-        print("Here are a list of recent reviews...")
-        count = 0
-        while count <= 5 and count <= (len(match_reviews) - 1):
-            print("Reviews: " + match_reviews[count])
-            print("Rating: " + str(avg_rating[count]))
-            print("User: " + match_user[count])
-            count = count + 1
-elif avg_input.lower() == "artist":
-    avg_artist = input(
-        "What artist would you like to view the average rating for? ")
-    for review in all_reviews:
-        if review["artist"].lower() == avg_artist.lower():
-            avg_rating.append(review["rating"])
-            match_reviews.append(review["review"])
-            match_user.append(review["user"])
-    if not avg_rating:
-        print("There seems to be no reviews for that particular artist. Please make sure you have entered the name correctly, or leave a review for that artist!")
-    else:
-        rating_output = sum(avg_rating) / len(avg_rating)
-        print("Here is the average rating for the song " + avg_artist.upper() +
-              " based on all user reviews: " + str(rating_output))
-        print("-------------------")
-        print("Here are a list of recent reviews...")
-        count = 0
-        while count <= 5 and count <= (len(match_reviews) - 1):
-            print("Reviews: " + match_reviews[count])
-            print("Rating: " + str(avg_rating[count]))
-            print("User: " + match_user[count])
-            count = count + 1
-elif avg_input.lower() == "album":
-    avg_album = input(
-        "What album would you like to view the average rating for? ")
-    for review in all_reviews:
-        if review["album"].lower() == avg_album.lower():
-            avg_rating.append(review["rating"])
-            match_reviews.append(review["review"])
-            match_user.append(review["user"])
-    if not avg_rating:
-        print("There seems to be no reviews for that particular album. Please make sure you have entered the name correctly, or leave a review for that album!")
-    else:
-        rating_output = sum(avg_rating) / len(avg_rating)
-        print("Here is the average rating for the album " + avg_album.upper() +
-              " based on all user reviews: " + str(rating_output))
-        print("-------------------")
-        print("Here are a list of recent reviews...")
-        count = 0
-        while count <= 5 and count <= (len(match_reviews) - 1):
-            print("Reviews: " + match_reviews[count])
-            print("Rating: " + str(avg_rating[count]))
-            print("User: " + match_user[count])
-            count = count + 1
+        count = count + 1
