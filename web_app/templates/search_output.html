@@ -1,0 +1,22 @@
+{% extends "bootstrap_5_layout.html" %}
+{% set active_page = "search_reviews" %}
+
+{% block content %}
+
+    <h3>Here are reviews we found that match your search criteria...</h3>
+    <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+
+    <p>Here is the average rating for <b>{{name}}</b> based on all user reviews: <b>{{rating_output}}</b></p>
+
+    <p>Here are a list of the most recent reviews...</p>
+
+    {% for review in review_list %}
+
+     <b>Review:</b> {{review[0]}}
+     <b>Rating:</b> {{review[1]}}
+     <b>User:</b> {{review[2]}}
+     <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+
+    {% endfor %}
+
+{% endblock %}

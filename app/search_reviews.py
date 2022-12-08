@@ -38,6 +38,7 @@ if __name__ == "__main__":
             print("There seems to be no reviews for that particular " + avg_input + ". Please make sure you have entered the name correctly or leave a review yourself!")
             quit()
 
+    avg_rating = [int(x) for x in avg_rating]
 
     rating_output = sum(avg_rating) / len(avg_rating)
     print("Here is the average rating for " + search_input.upper() + " based on all user reviews: " + str(rating_output))

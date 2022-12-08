@@ -3,7 +3,7 @@
 
 {% block content %}
 
-    <h2>Song Review</h2>
+    <h2></h2>
 
     <p>Please write your review for the following song...</p>
 
@@ -18,11 +18,11 @@
 
         <div class="form-group">
         <label for="review">Write your review below:</label>
-        <textarea class="form-control" name="review" rows="3"></textarea>
+        <textarea class="form-control" name="review" rows="3" required></textarea>
         </div>
         <br>
 
-        <label>Song Rating (out of 5; 5 being the best):</label>
+        <label>Song Rating (on a scale from 1-5, with 5 being the best):</label>
         <select class="form-control" name="rating">
             <option>1</option>
             <option>2</option>
@@ -33,15 +33,15 @@
         <br>
 
         <label>Username:</label><br>
-        <input type="text" name="username">
+        <input type="text" name="username" required>
         <br>
         <br>
 
         <button class="btn btn-success">Submit</button>
 
-         <input type="hidden" name="title" value="song_title">
-        <input type="hidden" name="artist" value="song_artist">
-        <input type="hidden" name="album" value="song_album">
+        <input type="hidden" name="title" value="{{song_title}}">
+        <input type="hidden" name="artist" value="{{song_artist}}">
+        <input type="hidden" name="album" value="{{song_album}}">
     </form>
 
 {% endblock %}
