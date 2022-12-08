@@ -2,7 +2,7 @@
 
 from flask import Blueprint, request, render_template, redirect, flash
 
-from app.music_reviews import fetch_spotify_data
+from app.music_reviews import fetch_spotify_data, open_pickle_file
 
 reviews_routes = Blueprint("reviews_routes", __name__)
 
@@ -99,16 +99,19 @@ def submit_form():
         request_data = dict(request.args)
         print("URL PARAMS:", request_data)
 
+
+    review = request.form['review']
+    rating = request.form['rating']
+    user = request.form['username']
     title = request.form['title']
     artist = request.form['artist']
     album = request.form['album']
-    review = request.form['review']
-    rating = request.form['rating']
-    user = request.form['user']
 
     song_info = {"title": title, "artist": artist,
                  "album": album, "review": review, "rating": rating, "user": user}
 
+    open_pickle_file(song_info=song_info)
+    
     try:
         return render_template("submit_form.html",
                                )

@@ -1,0 +1,26 @@
+{% extends "bootstrap_5_layout.html" %}
+{% set active_page = "search_reviews" %}
+
+{% block content %}
+
+    <h2>Search Reviews</h2>
+
+    <form action="/search-review/output" method="POST">
+
+        <label>At what level would you like to search reviews for?</label>
+        <select name="review_level">
+            <option value="title">Song</option>
+            <option value="artist">Artist</option>
+            <option value="album">Album</option>
+        </select>
+        <br>
+
+        <label>What is the name of the song/artist/album you would like to view reviews for: </label>
+        <input type="text" name="name" placeholder="Name" required>
+        <br>
+        <br>
+
+        <button class="btn btn-success">Submit</button>
+    </form>
+
+{% endblock %}

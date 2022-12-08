@@ -43,6 +43,24 @@ def fetch_spotify_data(song):
     data = json.loads(response.text)
     return data
 
+
+def open_pickle_file(song_info):
+    """Open and store data in a pickle file."""
+
+    # open a pickle file
+    filename = 'reviews.pk'
+
+    all_reviews = []
+
+    if os.path.exists(filename):
+        with open(filename, 'rb') as rfp:
+            all_reviews = pickle.load(rfp)
+
+    all_reviews.append(song_info)
+
+    with open(filename, 'wb') as wfp:
+        pickle.dump(all_reviews, wfp)
+
 if __name__ == "__main__":
 
     song = input("Please input the title of the song you would like to review: ")
@@ -120,18 +138,7 @@ if __name__ == "__main__":
     # update song info with review information
     song_info.update({'review': user_review, 'rating': user_rating, 'user': user_name})
 
-    # open a pickle file
-    filename = 'reviews.pk'
+    open_pickle_file(song_info)
 
-    all_reviews = []
-
-    if os.path.exists(filename):
-        with open(filename, 'rb') as rfp:
-            all_reviews = pickle.load(rfp)
-
-    all_reviews.append(song_info)
-
-    with open(filename, 'wb') as wfp:
-        pickle.dump(all_reviews, wfp)
 
     print("Thanks! Your review has been submitted.")
