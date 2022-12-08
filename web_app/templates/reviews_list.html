@@ -6,14 +6,15 @@
     <h2>Here are a list of songs that might fit your search criteria...</h2>
 
     {% for result in song_list %}
-    <tr>
-        <td>{{ result[0] }}</td> by
-        <td>{{ result[1] }}</td></a>
-        <br>
-    </tr>
+
+    <form action="/add-review/form" method="POST">
+    <input type="hidden" name="title" value="{{result[0]}}">
+    <input type="hidden" name="artist" value="{{result[1]}}">
+    <input type="hidden" name="album" value="{{result[2]}}">
+    <input type="hidden" name="art" value="{{result[3]}}">
+    <button class="btn btn-link">{{result[0]}} by {{result[1]}}</button>
+    </form>
+
     {% endfor %}
 
-
 {% endblock %}
-
-</p>

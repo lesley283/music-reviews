@@ -1,0 +1,47 @@
+{% extends "bootstrap_5_layout.html" %}
+{% set active_page = "review_form" %}
+
+{% block content %}
+
+    <h2>Song Review</h2>
+
+    <p>Please write your review for the following song...</p>
+
+    <p><b>Song:</b> {{song_title}}</p>
+    <p><b>Artist:</b> {{song_artist}}</p>
+    <p><b>Album:</b> {{song_album}}</p>
+    <img src="{{song_art}}">
+    <br>
+    <br>
+
+    <form action="/add-review/submit" method="POST">
+
+        <div class="form-group">
+        <label for="review">Write your review below:</label>
+        <textarea class="form-control" name="review" rows="3"></textarea>
+        </div>
+        <br>
+
+        <label>Song Rating (out of 5; 5 being the best):</label>
+        <select class="form-control" name="rating">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        <br>
+
+        <label>Username:</label><br>
+        <input type="text" name="username">
+        <br>
+        <br>
+
+        <button class="btn btn-success">Submit</button>
+
+         <input type="hidden" name="title" value="song_title">
+        <input type="hidden" name="artist" value="song_artist">
+        <input type="hidden" name="album" value="song_album">
+    </form>
+
+{% endblock %}
