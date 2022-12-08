@@ -5,9 +5,9 @@
 import pickle
 from itertools import islice
 
-def reverse_list(original_list):
+def reverse_list(original_list, num):
     """Return newest 5 reviews by reversing list"""
-    new_list = list(islice(reversed(original_list), 0, 5))
+    new_list = list(islice(reversed(original_list), 0, num))
     return new_list
 
 if __name__ == "__main__":
@@ -46,9 +46,9 @@ if __name__ == "__main__":
     print("-------------------")
 
     # reverse list (since most recent reviews are at the back of the list)
-    reviews = reverse_list(match_reviews)
-    ratings = reverse_list(avg_rating)
-    users = reverse_list(match_user)
+    reviews = reverse_list(match_reviews, 5)
+    ratings = reverse_list(avg_rating, 5)
+    users = reverse_list(match_user, 5)
 
     count = 0
     while count <= 5 and count <= (len(match_reviews) - 1):

@@ -55,14 +55,19 @@ def search_validation():
         rating_output = round(rating_output, 2)
 
         # reverse list (since most recent reviews are at the back of the list)
-        reviews = reverse_list(match_reviews)
-        ratings = reverse_list(avg_rating)
-        users = reverse_list(match_user)
+        reviews = reverse_list(match_reviews, 5)
+        ratings = reverse_list(avg_rating, 5)
+        users = reverse_list(match_user, 5)
 
-        #flash("Fetched Real-time Market Data!", "success")
-        return render_template("search_output.html",
-                                name=name,
-                                review_level=review_level,
-                                rating_output=rating_output,
-                                review_list=zip(reviews, ratings, users)
+        try:
+            #flash("Fetched Real-time Market Data!", "success")
+            return render_template("search_output.html",
+                                    name=name,
+                                    review_level=review_level,
+                                    rating_output=rating_output,
+                                    review_list=zip(reviews, ratings, users)
                                 )
+
+        except Exception as err:
+            print('OOPS', err)
+            return redirect("/search-review")

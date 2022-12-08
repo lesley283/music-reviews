@@ -18,8 +18,8 @@ def test_data_fetching():
 def test_reverse_list():
     test_list = [1, 2, 3, 4, 5, 6, 7]
     reversed_list = [7, 6, 5, 4, 3]
-    assert reverse_list(test_list) == reversed_list
+    assert reverse_list(test_list, 5) == reversed_list
 
     test_list = [1, 2, 3]
     reversed_list = [3, 2, 1]
-    assert reverse_list(test_list) == reversed_list
+    assert reverse_list(test_list, 5) == reversed_list

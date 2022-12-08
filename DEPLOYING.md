@@ -88,3 +88,5 @@ heroku run "python -m app.music_reviews"
 ## It's Alive!
 
 Congratulations, you have just deployed a software service!
+
+Visit the web app at the following link: https://music-reviews-lam.herokuapp.com/
