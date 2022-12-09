@@ -36,20 +36,20 @@ SECRET_KEY="__________________" # used for web app deploying
 
 ## Usage
 
-
-Run the music review app to input reviews:
+Run the music review app to input reviews (from the command line):
 
 ```sh
 python -m app.music_reviews
 ```
 
-Run the search review app to search past reviews:
+Run the search review app to search past reviews (from the command line):
 ```sh
 python -m app.search_reviews
 ```
 
-
 ## Web App
+
+Visit the deployed website using Heroku, https://music-reviews-lam.herokuapp.com/
 
 Run the web app (then view in the browser at http://localhost:5000/):
 
