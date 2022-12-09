@@ -16,4 +16,3 @@ def test_pickle_data():
     assert "review" in review.keys()
     assert "rating" in review.keys()
     assert "user" in review.keys()
-    print("no user has inputted any reviews yet")

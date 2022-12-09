@@ -30,8 +30,6 @@ Then create a local ".env" file and provide the keys like this:
 CLIENT_ID="__________________"
 CLIENT_SECRET="__________________"
 SECRET_KEY="__________________" # used for web app deploying
-
-
 ```
 
 ## Usage
@@ -49,9 +47,9 @@ python -m app.search_reviews
 
 ## Web App
 
-Visit the deployed website using Heroku, https://music-reviews-lam.herokuapp.com/
+Visit the deployed website using Heroku at https://music-reviews-lam.herokuapp.com/
 
-Run the web app (then view in the browser at http://localhost:5000/):
+Run the web app from the command line (then view in the browser at http://localhost:5000/):
 
 ```sh
 # Mac OS:

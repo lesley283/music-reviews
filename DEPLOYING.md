@@ -19,10 +19,10 @@ heroku apps # at this time, results might be empty-ish
 
 > IMPORTANT: run the following commands from the root directory of your repository!
 
-Use the command-line (instructions below) to create a new application server, specifying a unique name (e.g. "unemployment-app-123", but yours will need to be different):
+Use the command-line (instructions below) to create a new application server, specifying a unique name (e.g. "music-reviews-lam", but yours will need to be different):
 
 ```sh
-heroku create music-reviews-123 # choose your own unique name!
+heroku create music-reviews-lam # choose your own unique name!
 ```
 
 Verify the app has been created:
@@ -52,7 +52,7 @@ heroku config # at this time, results might be empty-ish
 # set environment variables:
 heroku config:set CLIENT_ID="_________"
 heroku config:set CLIENT_SECRET="_________"
-heroku config:set SECRET_KEY="_________"
+heroku config:set SECRET_KEY="_________" # used for web app deploying
 ```
 
 At this point, you should be able to verify the production environment has been configured with the proper environment variable values:
@@ -84,6 +84,8 @@ heroku run bash # login to the server
 
 # or alternatively, run it from your computer, in "detached" mode:
 heroku run "python -m app.music_reviews"
+
+heroku run "python -m app.search_reviews"
 ```
 
 ## It's Alive!
