@@ -6,8 +6,9 @@ from flask import Flask
 
 from web_app.routes.home_routes import home_routes
 from web_app.routes.reviews_routes import reviews_routes
-
 from web_app.routes.search_routes import search_routes
+from web_app.routes.past_reviews_routes import past_reviews_routes
+
 load_dotenv()
 SECRET_KEY = os.getenv("SECRET_KEY")
 
@@ -19,6 +20,7 @@ def create_app():
     app.register_blueprint(home_routes)
     app.register_blueprint(reviews_routes)
     app.register_blueprint(search_routes)
+    app.register_blueprint(past_reviews_routes)
     return app
 
 

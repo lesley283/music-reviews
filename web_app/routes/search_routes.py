@@ -38,11 +38,9 @@ def search_validation():
     avg_rating = []
     match_reviews = []
     match_user = []
-    song_title = []
 
     for review in all_reviews:
         if (review_level == "artist" and name == review["artist"].upper()) or (review_level == "title" and name == review["title"].upper()) or (review_level == "album" and name == review["album"].upper()):
-            song_title.append(review["title"])
             avg_rating.append(review["rating"])
             match_reviews.append(review["review"])
             match_user.append(review["user"])
@@ -57,18 +55,19 @@ def search_validation():
         rating_output = round(rating_output, 2)
 
         # reverse list (since most recent reviews are at the back of the list)
-        reviews = reverse_list(match_reviews)
-        ratings = reverse_list(avg_rating)
-        users = reverse_list(match_user)
-        title = reverse_list(song_title)
+        reviews = reverse_list(match_reviews, 5)
+        ratings = reverse_list(avg_rating, 5)
+        users = reverse_list(match_user, 5)
 
         try:
+            #flash("Fetched Real-time Market Data!", "success")
             return render_template("search_output.html",
-                                name=name,
-                                review_level=review_level,
-                                rating_output=rating_output,
-                                review_list=zip(reviews, ratings, users, title)
+                                    name=name,
+                                    review_level=review_level,
+                                    rating_output=rating_output,
+                                    review_list=zip(reviews, ratings, users)
                                 )
+
         except Exception as err:
-            print('OOPs', err)
+            print('OOPS', err)
             return redirect("/search-review")

@@ -1,0 +1,22 @@
+{% extends "bootstrap_5_layout.html" %}
+{% set active_page = "past_reviews" %}
+
+{% block content %}
+
+    <h3>Recent reviews</h3>
+
+    <p>Here are songs other people have been listening to lately...</b></p>
+
+    {% for review in recent_reviews %}
+
+        <b>Song:</b> {{review.title}}
+        <b>Artist:</b> {{review.artist}}
+        <b>Album:</b> {{review.album}}
+        <b>Review:</b> {{review.review}}
+        <b>Rating:</b> {{review.rating}}
+        <b>User:</b> {{review.user}}
+        <hr style="height:2px;border-width:0;color:gray;background-color:gray">
+
+    {% endfor %}
+
+{% endblock %}
