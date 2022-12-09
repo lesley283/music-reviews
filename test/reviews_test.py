@@ -23,3 +23,10 @@ def test_reverse_list():
     test_list = [1, 2, 3]
     reversed_list = [3, 2, 1]
     assert reverse_list(test_list, 5) == reversed_list
+
+    reversed_list = [3]
+    assert reverse_list(test_list, 1) == reversed_list
+
+    test_list = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
+    reversed_list = [12, 11, 10, 9, 8, 7, 6, 5, 4, 3]
+    assert reverse_list(test_list, 10) == reversed_list

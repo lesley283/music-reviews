@@ -5,10 +5,11 @@
 
     <h3>Recent reviews</h3>
 
-    <p>Here are songs other people have been listening to lately...</b></p>
+    <p>Here are songs other people have been listening to lately...</p>
 
+    <tbody>
     {% for review in recent_reviews %}
-
+        <tr>
         <b>Song:</b> {{review.title}}
         <b>Artist:</b> {{review.artist}}
         <b>Album:</b> {{review.album}}
@@ -16,7 +17,8 @@
         <b>Rating:</b> {{review.rating}}
         <b>User:</b> {{review.user}}
         <hr style="height:2px;border-width:0;color:gray;background-color:gray">
-
+        </tr>
     {% endfor %}
+    </tbody>
 
 {% endblock %}

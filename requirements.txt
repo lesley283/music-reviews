@@ -13,4 +13,4 @@ gunicorn # <--- UNCOMMENT FOR HEROKU DEPLOY; Heroku server wants to use this pac
 pytest
 
 # using bsoup in testing the web app:
-#beautifulsoup4 # <-- ADDITIONcd
+beautifulsoup4 # <-- ADDITIONcd
