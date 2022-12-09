@@ -1,9 +1,6 @@
 # this is the "web_app/routes/past_reviews_routes.py" file ...
 
-
-import pickle
-from itertools import islice
-from app.search_reviews import reverse_list
+from app.search_reviews import reverse_list, load_pickle_data
 from flask import Blueprint, request, render_template, redirect, flash
 
 
@@ -15,9 +12,7 @@ def past_reviews():
     print("PAST REVIEWS FORM...")
 
     try:
-        # load data from pickle file back to memory
-        with open('reviews.pk', 'rb') as rfp:
-            all_reviews = pickle.load(rfp)
+        all_reviews = load_pickle_data()
 
         recent_reviews = reverse_list(all_reviews, 10)
 

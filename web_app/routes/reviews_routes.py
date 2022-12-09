@@ -87,7 +87,6 @@ def submit_form():
         request_data = dict(request.args)
         print("URL PARAMS:", request_data)
 
-
     review = request.form['review']
     rating = request.form['rating']
     user = request.form['username']
