@@ -95,7 +95,7 @@ if __name__ == "__main__":
         print("Song: " + x)
         print("Artist: " + artist[count])
         print("Album: " + album[count])
-        print("Reviews: " + reviews[count])
+        print("Review: " + reviews[count])
         print("Rating: " + str(ratings[count]))
         print("User: " + users[count])
         print("-------------------")

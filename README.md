@@ -1,4 +1,6 @@
-# music-reviews
+# Spotify Review App - OPIM 244 Freestyle Project
+
+This web app allows users to write and read reviews on songs using the Spotify API.
 
 ## Setup
 
@@ -47,8 +49,6 @@ python -m app.search_reviews
 
 ## Web App
 
-Visit the deployed website using Heroku at https://music-reviews-lam.herokuapp.com/
-
 Run the web app from the command line (then view in the browser at http://localhost:5000/):
 
 ```sh
@@ -61,6 +61,10 @@ FLASK_APP=web_app flask run
 export FLASK_APP=web_app
 flask run
 ```
+## Deploying
+View the [Deploying Guide](https://github.com/lesley283/music-reviews/blob/main/DEPLOYING.md) for instructions on deploying to a production server hosted by Heroku.
+
+Visit the deployed website at https://music-reviews-lam.herokuapp.com/
 
 ## Testing
 
@@ -69,3 +73,4 @@ Run tests:
 ```sh
 pytest
 ```
+## [License](https://github.com/lesley283/music-reviews/blob/main/LICENSE.md)
