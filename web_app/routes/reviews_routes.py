@@ -43,12 +43,12 @@ def review_form():
 
     request_data = request_method(request)
 
-    song_title = request.form['title']
-    song_artist = request.form['artist']
-    song_album = request.form['album']
-    song_art = request.form['art']
-
     try:
+        song_title = request.form['title']
+        song_artist = request.form['artist']
+        song_album = request.form['album']
+        song_art = request.form['art']
+
         return render_template("review_form.html",
                                song_title=song_title,
                                song_artist=song_artist,
@@ -68,23 +68,23 @@ def submit_form():
 
     request_data = request_method(request)
 
-    review = request.form['review']
-    rating = request.form['rating']
-    user = request.form['username']
-    title = request.form['title']
-    artist = request.form['artist']
-    album = request.form['album']
-
-    song_info = {"title": title, "artist": artist,
-                 "album": album, "review": review, "rating": rating, "user": user}
-
-    open_pickle_file(song_info=song_info)
-
     try:
+        review = request.form['review']
+        rating = request.form['rating']
+        user = request.form['username']
+        title = request.form['title']
+        artist = request.form['artist']
+        album = request.form['album']
+
+        song_info = {"title": title, "artist": artist,
+                    "album": album, "review": review, "rating": rating, "user": user}
+
+        open_pickle_file(song_info=song_info)
+
         return render_template("submit_form.html",
                                )
     except Exception as err:
         print('OOPS', err)
 
         #flash("Market Data Error. Please check your symbol and try again!", "danger")
-        return redirect("/add-review")
+        return redirect("/")
