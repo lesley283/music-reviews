@@ -8,7 +8,6 @@
 
 import requests
 import json
-from IPython.display import Image, display
 from app.spotify import CLIENT_ID, CLIENT_SECRET
 import os
 from dotenv import load_dotenv
@@ -52,23 +51,21 @@ def open_pickle_file(song_info):
 
     all_reviews = []
 
+    # make sure the pickle file exists already
     if os.path.exists(filename):
         with open(filename, 'rb') as rfp:
             all_reviews = pickle.load(rfp)
 
+    # add the most recent song review into the all_reviews list
     all_reviews.append(song_info)
 
+    # dump the appended all_reviews list into a pickle file
     with open(filename, 'wb') as wfp:
         pickle.dump(all_reviews, wfp)
 
-if __name__ == "__main__":
 
-    song = input("Please input the title of the song you would like to review: ")
-
-    data = fetch_spotify_data(song)
-
-    # Cleaning the data
-    song_ids = []
+def data_cleaning(data):
+    """Clean complex data retrieved from the Spotify API."""
     song_names = []
     artist_name = []
     album_name = []
@@ -77,10 +74,20 @@ if __name__ == "__main__":
     for track in data["tracks"]["items"]:
         if track["artists"][0]["name"] not in artist_name:
             song_names.append(track["name"])
-            song_ids.append(track["id"])
             artist_name.append(track["artists"][0]["name"])
             album_name.append(track["album"]["name"])
             album_art.append(track["album"]["images"][1]["url"])
+
+    return song_names, artist_name, album_name, album_art
+
+
+if __name__ == "__main__":
+
+    song = input("Please input the title of the song you would like to review: ")
+
+    data = fetch_spotify_data(song)
+
+    song_names, artist_name, album_name, album_art = data_cleaning(data)
 
     # Select which specific song / artist you want
     print("Here are all of the songs that we've come up with that might fit your search criteria:")
@@ -101,8 +108,7 @@ if __name__ == "__main__":
     if artist in artist_name:
         index = artist_name.index(artist)
 
-        song_info = {"title": song_names[index], "track id": song_ids[index],
-                     "artist": artist_name[index], "album": album_name[index], "art": album_art[index]}
+        song_info = {"title": song_names[index], "artist": artist_name[index], "album": album_name[index], "art": album_art[index]}
 
     # output the chosen song's information
 
@@ -110,10 +116,6 @@ if __name__ == "__main__":
     print("SONG TITLE: " + song_info["title"])
     print("ARTIST: " + song_info["artist"])
     print("ALBUM TITLE: " + song_info["album"])
-
-    # display album image
-    image_url = song_info["art"]
-    display(Image(url=image_url))
 
     # ADD A REVIEW
     user_review = input("Please write your review for " +
@@ -139,6 +141,5 @@ if __name__ == "__main__":
     song_info.update({'review': user_review, 'rating': user_rating, 'user': user_name})
 
     open_pickle_file(song_info)
-
 
     print("Thanks! Your review has been submitted.")

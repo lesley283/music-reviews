@@ -2,7 +2,7 @@
 
 from flask import Blueprint, request, render_template, redirect, flash
 
-from app.music_reviews import fetch_spotify_data, open_pickle_file
+from app.music_reviews import fetch_spotify_data, open_pickle_file, data_cleaning
 
 reviews_routes = Blueprint("reviews_routes", __name__)
 
@@ -29,19 +29,7 @@ def reviews_list():
     try:
         data = fetch_spotify_data(song=song)
 
-        # Cleaning the data
-        song_ids = []
-        song_names = []
-        artist_name = []
-        album_name = []
-        album_art = []
-
-        for track in data["tracks"]["items"]:
-            if track["artists"][0]["name"] not in artist_name:
-                song_names.append(track["name"])
-                artist_name.append(track["artists"][0]["name"])
-                album_name.append(track["album"]["name"])
-                album_art.append(track["album"]["images"][1]["url"])
+        song_names, artist_name, album_name, album_art = data_cleaning(data)
 
         #flash("Fetched Real-time Market Data!", "success")
         return render_template("reviews_list.html",
