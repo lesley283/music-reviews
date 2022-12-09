@@ -53,8 +53,11 @@ def open_pickle_file(song_info):
 
     # make sure the pickle file exists already
     if os.path.exists(filename):
-        with open(filename, 'rb') as rfp:
-            all_reviews = pickle.load(rfp)
+        try:
+            with open(filename, 'rb') as rfp:
+                all_reviews = pickle.load(rfp)
+        except EOFError:
+            all_reviews = []
 
     # add the most recent song review into the all_reviews list
     all_reviews.append(song_info)

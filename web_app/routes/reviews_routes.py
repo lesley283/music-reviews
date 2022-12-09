@@ -3,6 +3,7 @@
 from flask import Blueprint, request, render_template, redirect, flash
 
 from app.music_reviews import fetch_spotify_data, open_pickle_file, data_cleaning
+from web_app.request_method import request_method
 
 reviews_routes = Blueprint("reviews_routes", __name__)
 
@@ -11,18 +12,12 @@ def song_form():
     print("SONG FORM...")
     return render_template("song_form.html")
 
+
 @reviews_routes.route("/add-review/list", methods=["GET", "POST"])
 def reviews_list():
     print("SONG LIST...")
 
-    if request.method == "POST":
-        # for data sent via POST request, form inputs are in request.form:
-        request_data = dict(request.form)
-        print("FORM DATA:", request_data)
-    else:
-        # for data sent via GET request, url params are in request.args
-        request_data = dict(request.args)
-        print("URL PARAMS:", request_data)
+    request_data = request_method(request)
 
     song = request_data.get("song")
 
@@ -46,14 +41,7 @@ def reviews_list():
 def review_form():
     print("REVIEW FORM...")
 
-    if request.method == "POST":
-        # for data sent via POST request, form inputs are in request.form:
-        request_data = dict(request.form)
-        print("FORM DATA:", request_data)
-    else:
-        # for data sent via GET request, url params are in request.args
-        request_data = dict(request.args)
-        print("URL PARAMS:", request_data)
+    request_data = request_method(request)
 
     song_title = request.form['title']
     song_artist = request.form['artist']
@@ -78,14 +66,7 @@ def review_form():
 def submit_form():
     print("SUBMIT FORM...")
 
-    if request.method == "POST":
-        # for data sent via POST request, form inputs are in request.form:
-        request_data = dict(request.form)
-        print("FORM DATA:", request_data)
-    else:
-        # for data sent via GET request, url params are in request.args
-        request_data = dict(request.args)
-        print("URL PARAMS:", request_data)
+    request_data = request_method(request)
 
     review = request.form['review']
     rating = request.form['rating']
