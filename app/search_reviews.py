@@ -29,6 +29,8 @@ def load_matching_reviews(search_input, review_level, all_reviews):
     match_reviews = []
     match_user = []
     match_song = []
+    match_artist = []
+    match_album = []
 
     # If the user wants to search reviews for an artist and that artist name was found in the all_reviews list, append it to the matching reviews lists
     # Complex IF statement catches errors if user inputs "song" and "Taylor Swift," since it should only return reviews if the review_level AND search_input match (i.e. "artist" and "Taylor Swift")
@@ -38,10 +40,12 @@ def load_matching_reviews(search_input, review_level, all_reviews):
             match_reviews.append(review["review"])
             match_user.append(review["user"])
             match_song.append(review["title"])
+            match_artist.append(review["artist"])
+            match_album.append(review["album"])
 
-    return avg_rating, match_reviews, match_user, match_song
+    return avg_rating, match_reviews, match_user, match_song, match_artist, match_album
 
-def reviews_output(avg_rating, match_reviews, match_user, match_song):
+def reviews_output(avg_rating, match_reviews, match_user, match_song, match_artist, match_album):
     """Returns most recent reviews output, including 5 most recent reviews and average rating"""
 
     avg_rating = [int(x) for x in avg_rating] # make sure avg_rating items are all integers and not strings
@@ -53,8 +57,10 @@ def reviews_output(avg_rating, match_reviews, match_user, match_song):
     ratings = reverse_list(avg_rating, 5)
     users = reverse_list(match_user, 5)
     song = reverse_list(match_song, 5)
+    artist = reverse_list(match_artist, 5)
+    album = reverse_list(match_album, 5)
 
-    return rating_output, reviews, ratings, users, song
+    return rating_output, reviews, ratings, users, song, artist, album
 
 if __name__ == "__main__":
 
@@ -72,13 +78,13 @@ if __name__ == "__main__":
     search_input = input("What " + review_level + " would you like to view the average rating for? ")
     search_input = search_input.upper() # convert to uppercase to compare to list of reviews without case sensitivity
 
-    avg_rating, match_reviews, match_user, match_song = load_matching_reviews(search_input, review_level, all_reviews)
+    avg_rating, match_reviews, match_user, match_song, match_artist, match_album = load_matching_reviews(search_input, review_level, all_reviews)
 
     if len(avg_rating) == 0: # list is empty
         print("There seems to be no reviews for that particular " + review_level + ". Please make sure you have entered the name correctly or leave a review yourself!")
         quit()
 
-    rating_output, reviews, ratings, users, song = reviews_output(avg_rating, match_reviews, match_user, match_song)
+    rating_output, reviews, ratings, users, song, artist, album = reviews_output(avg_rating, match_reviews, match_user, match_song, match_artist, match_album)
 
     print("Here is the average rating for " + search_input.upper() + " based on all user reviews: " + str(rating_output))
     print("Here are a list of recent reviews...")
@@ -87,6 +93,8 @@ if __name__ == "__main__":
     count = 0
     for x in song:
         print("Song: " + x)
+        print("Artist: " + artist[count])
+        print("Album: " + album[count])
         print("Reviews: " + reviews[count])
         print("Rating: " + str(ratings[count]))
         print("User: " + users[count])

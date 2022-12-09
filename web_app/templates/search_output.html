@@ -8,11 +8,13 @@
 
     <p>Here is the average rating for <b>{{name}}</b> based on all user reviews: <b>{{rating_output}}</b></p>
 
-    <p>Here are a list of the most recent reviews...</p>
+    <p>Here is a list of the most recent reviews...</p>
 
     {% for review in review_list %}
 
      <b>Song:</b> {{review[3]}}
+     <b>Artist:</b> {{review[4]}}
+     <b>Album:</b> {{review[5]}}
      <b>Review:</b> {{review[0]}}
      <b>Rating:</b> {{review[1]}}
      <b>User:</b> {{review[2]}}

@@ -29,7 +29,7 @@ Then create a local ".env" file and provide the keys like this:
 
 CLIENT_ID="__________________"
 CLIENT_SECRET="__________________"
-SECRET_KEY="__________________" # used for web app deploying
+SECRET_KEY="__________________" # secret key used for FLASK web app
 ```
 
 ## Usage

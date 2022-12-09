@@ -52,7 +52,7 @@ heroku config # at this time, results might be empty-ish
 # set environment variables:
 heroku config:set CLIENT_ID="_________"
 heroku config:set CLIENT_SECRET="_________"
-heroku config:set SECRET_KEY="_________" # used for web app deploying
+heroku config:set SECRET_KEY="_________" # secret key used for FLASK web app
 ```
 
 At this point, you should be able to verify the production environment has been configured with the proper environment variable values:
