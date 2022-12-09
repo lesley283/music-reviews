@@ -1,9 +1,9 @@
 
-import os
 from app.search_reviews import load_pickle_data
 
-# test what data that is loaded from pickle file looks like
+# test that the data that is loaded from the pickle file looks correct
 def test_pickle_data():
+
     data = load_pickle_data()
     assert isinstance(data, list)
 

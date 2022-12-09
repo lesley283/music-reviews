@@ -17,23 +17,21 @@ def song_form():
 def reviews_list():
     print("SONG LIST...")
 
-    request_data = request_method(request)
+    request_data = request_method(request) # custom function used to remove duplication in requesting data via POST vs. GET
 
-    song = request_data.get("song")
+    song = request_data.get("song") # get song inputted by user via the song form
 
     try:
         data = fetch_spotify_data(song=song)
 
         song_names, artist_name, album_name, album_art = data_cleaning(data)
 
-        #flash("Fetched Real-time Market Data!", "success")
         return render_template("reviews_list.html",
                                song_list=zip(song_names, artist_name, album_name, album_art)
                                )
     except Exception as err:
         print('OOPS', err)
 
-        #flash("Market Data Error. Please check your symbol and try again!", "danger")
         return redirect("/add-review")
 
 
@@ -41,10 +39,10 @@ def reviews_list():
 def review_form():
     print("REVIEW FORM...")
 
-    request_data = request_method(request)
+    request_data = request_method(request) # custom function used to remove duplication in requesting data via POST vs. GET
 
     try:
-        song_title = request.form['title']
+        song_title = request.form['title'] # get all attributes of song that user wants to review
         song_artist = request.form['artist']
         song_album = request.form['album']
         song_art = request.form['art']
@@ -58,7 +56,6 @@ def review_form():
     except Exception as err:
         print('OOPS', err)
 
-        #flash("Market Data Error. Please check your symbol and try again!", "danger")
         return redirect("/add-review")
 
 
@@ -66,9 +63,10 @@ def review_form():
 def submit_form():
     print("SUBMIT FORM...")
 
-    request_data = request_method(request)
+    request_data = request_method(request) # custom function used to remove duplication in requesting data via POST vs. GET
 
     try:
+        # get all attributes and review information of song that user has reviewed
         review = request.form['review']
         rating = request.form['rating']
         user = request.form['username']
@@ -79,12 +77,11 @@ def submit_form():
         song_info = {"title": title, "artist": artist,
                     "album": album, "review": review, "rating": rating, "user": user}
 
-        open_pickle_file(song_info=song_info)
+        open_pickle_file(song_info=song_info) # load into pickle file for storage
 
         return render_template("submit_form.html",
                                )
     except Exception as err:
         print('OOPS', err)
 
-        #flash("Market Data Error. Please check your symbol and try again!", "danger")
         return redirect("/")

@@ -17,15 +17,14 @@ def search_form():
 def search_validation():
     print("SEARCH VALIDATION...")
 
-    request_data = request_method(request)
+    request_data = request_method(request) # custom function used to remove duplication in requesting data via POST vs. GET
 
     try:
-        #flash("Fetched Real-time Market Data!", "success")
         name = request_data.get("name")
         name = name.upper() # convert to uppercase to compare to list of reviews (without case sensitivity)
         review_level = request_data.get("review_level")
 
-        all_reviews = load_pickle_data()
+        all_reviews = load_pickle_data() # load past reviews from pickle file
 
         avg_rating, match_reviews, match_user, match_song = load_matching_reviews(name, review_level, all_reviews)
 
@@ -34,8 +33,7 @@ def search_validation():
             flash("There seems to be no reviews for that particular " + review_level + ". Please make sure you have entered the name correctly or leave a review yourself!", "danger")
             return redirect("/search-review")
         else:
-
-            rating_output, reviews, ratings, users, song = reviews_output(avg_rating, match_reviews, match_user, match_song)
+            rating_output, reviews, ratings, users, song = reviews_output(avg_rating, match_reviews, match_user, match_song) # return the correct output, including 5 most recent reviews and average rating
 
             return render_template("search_output.html",
                                     name=name,

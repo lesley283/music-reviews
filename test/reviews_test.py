@@ -10,7 +10,6 @@ def test_data_fetching():
     items = data["tracks"]["items"][0]
     assert isinstance(items, dict)
     assert "name" in items.keys()
-    assert "id" in items.keys()
     assert "artists" in items.keys()
     assert "album" in items.keys()
 

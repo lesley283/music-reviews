@@ -18,7 +18,7 @@
 
         <div class="form-group">
         <label for="review">Write your review below:</label>
-        <textarea class="form-control" name="review" rows="3" required></textarea>
+        <textarea class="form-control" name="review" rows="3" required></textarea>  <!-- Required criteria makes it so user cannot hit submit without filling in this info first -->
         </div>
         <br>
 
@@ -39,6 +39,7 @@
 
         <button class="btn btn-success">Submit</button>
 
+        <!-- Send this information via POST but hidden since we have this info already and don't need user to input again -->
         <input type="hidden" name="title" value="{{song_title}}">
         <input type="hidden" name="artist" value="{{song_artist}}">
         <input type="hidden" name="album" value="{{song_album}}">

@@ -10,11 +10,10 @@ import requests
 import json
 from app.spotify import CLIENT_ID, CLIENT_SECRET
 import os
-from dotenv import load_dotenv
-import pickle
+import pickle # used to save reviews into a file that can be accessed between multiple runs of the code
 
 def fetch_spotify_data(song):
-    """Fetches song data from the Spotify API. Returns a dictionary."""
+    """Fetches song data from the Spotify API. Returns a dictionary of songs that fit the user-inputted search criteria (the parameter: song)."""
 
     auth_url = 'https://accounts.spotify.com/api/token'
 
@@ -38,25 +37,26 @@ def fetch_spotify_data(song):
     BASE_URL = 'https://api.spotify.com/v1/'
 
     response = requests.get(BASE_URL + 'search?q=' +
-                            song + '&type=track&limit=20', headers=headers)
+                            song + '&type=track&limit=20', headers=headers) # if there are a lot of results that match the search criteria, only send back the first 20 songs
     data = json.loads(response.text)
     return data
 
 
 def open_pickle_file(song_info):
     """Open and store data in a pickle file."""
+    """Param song_info includes the song that we want to append to the all reviews list"""
 
-    # open a pickle file
+    # Set the filename of the pickle file we are trying to open
     filename = 'reviews.pk'
 
+    # Create an empty list for all reviews, will then load in data to it
     all_reviews = []
 
-    # make sure the pickle file exists already
-    if os.path.exists(filename):
+    if os.path.exists(filename): # if the pickle file exists already, load the existing reviews into all_reviews
         try:
             with open(filename, 'rb') as rfp:
                 all_reviews = pickle.load(rfp)
-        except EOFError:
+        except EOFError: # if the pickle file is empty, then all_reviews should be empty an empty list as well
             all_reviews = []
 
     # add the most recent song review into the all_reviews list
@@ -75,7 +75,7 @@ def data_cleaning(data):
     album_art = []
 
     for track in data["tracks"]["items"]:
-        if track["artists"][0]["name"] not in artist_name:
+        if track["artists"][0]["name"] not in artist_name: # if the artist hasn't already been added to the list (used to remove duplicate songs by the same artist)
             song_names.append(track["name"])
             artist_name.append(track["artists"][0]["name"])
             album_name.append(track["album"]["name"])
@@ -92,7 +92,7 @@ if __name__ == "__main__":
 
     song_names, artist_name, album_name, album_art = data_cleaning(data)
 
-    # Select which specific song / artist you want
+    # Print list of songs that might match search criteria and allow user to select which specific song / artist they want to review
     print("Here are all of the songs that we've come up with that might fit your search criteria:")
     count = 0
     for singer in artist_name:
@@ -101,33 +101,28 @@ if __name__ == "__main__":
     print("-------------------")
 
     while True:
-        artist = input(
-            "Please input the artist of the correct song you want to review (with correct capitalization): ")
+        artist = input("Please input the artist of the correct song you want to review (with correct capitalization): ")
         if artist in artist_name:
             break
         else:
             print("Sorry, that artist was not found. Please make sure you have used the correct capitalization.")
 
-    if artist in artist_name:
-        index = artist_name.index(artist)
-
-        song_info = {"title": song_names[index], "artist": artist_name[index], "album": album_name[index], "art": album_art[index]}
+    # store chosen song and its attributes into a dictionary
+    index = artist_name.index(artist)
+    song_info = {"title": song_names[index], "artist": artist_name[index], "album": album_name[index], "art": album_art[index]}
 
     # output the chosen song's information
-
     print("You have selected the following song to review...")
     print("SONG TITLE: " + song_info["title"])
     print("ARTIST: " + song_info["artist"])
     print("ALBUM TITLE: " + song_info["album"])
 
     # ADD A REVIEW
-    user_review = input("Please write your review for " +
-                        song_info["title"].upper() + ": ")
+    user_review = input("Please write your review for " + song_info["title"].upper() + ": ")
 
     test = True
     while test == True:
-        user_rating = input(
-            "Please rate the song using a value from 1 to 5 (with 5 being the best): ")
+        user_rating = input("Please rate the song using a value from 1 to 5 (with 5 being the best): ")
         try:
             user_rating = int(user_rating)
         except ValueError:
@@ -140,9 +135,10 @@ if __name__ == "__main__":
 
     user_name = input("Please input your name: ")
 
-    # update song info with review information
+    # update song info dictionary with review information
     song_info.update({'review': user_review, 'rating': user_rating, 'user': user_name})
 
+    # store new review information into a pickle file
     open_pickle_file(song_info)
 
     print("Thanks! Your review has been submitted.")
