@@ -34,7 +34,6 @@ SECRET_KEY="__________________" # used for web app deploying
 
 ## Usage
 
-
 Run the music review app to input reviews (from the command line):
 
 ```sh
@@ -45,7 +44,6 @@ Run the search review app to search past reviews (from the command line):
 ```sh
 python -m app.search_reviews
 ```
-
 
 ## Web App
 
