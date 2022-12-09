@@ -14,6 +14,7 @@ def past_reviews():
     try:
         all_reviews = load_pickle_data()
 
+        # get the 10 most recent reviews (found in the back of the original all_reviews list)
         recent_reviews = reverse_list(all_reviews, 10)
 
         return render_template("past_reviews.html",

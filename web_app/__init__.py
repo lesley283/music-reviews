@@ -1,17 +1,12 @@
 # this is the "web_app/__init__.py" file...
 
-import os
-from dotenv import load_dotenv
 from flask import Flask
+from app.spotify import SECRET_KEY
 
 from web_app.routes.home_routes import home_routes
 from web_app.routes.reviews_routes import reviews_routes
 from web_app.routes.search_routes import search_routes
 from web_app.routes.past_reviews_routes import past_reviews_routes
-
-load_dotenv()
-SECRET_KEY = os.getenv("SECRET_KEY")
-
 
 def create_app():
     app = Flask(__name__)
