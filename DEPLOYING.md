@@ -22,7 +22,7 @@ heroku apps # at this time, results might be empty-ish
 Use the command-line (instructions below) to create a new application server, specifying a unique name (e.g. "unemployment-app-123", but yours will need to be different):
 
 ```sh
-heroku create unemployment-app-123 # choose your own unique name!
+heroku create music-reviews-123 # choose your own unique name!
 ```
 
 Verify the app has been created:
@@ -52,6 +52,7 @@ heroku config # at this time, results might be empty-ish
 # set environment variables:
 heroku config:set CLIENT_ID="_________"
 heroku config:set CLIENT_SECRET="_________"
+heroku config:set SECRET_KEY="_________"
 ```
 
 At this point, you should be able to verify the production environment has been configured with the proper environment variable values:

@@ -29,16 +29,25 @@ Then create a local ".env" file and provide the keys like this:
 
 CLIENT_ID="__________________"
 CLIENT_SECRET="__________________"
+SECRET_KEY="__________________" # used for web app deploying
+
+
 ```
 
 ## Usage
 
 
-Run the music review app:
+Run the music review app to input reviews:
 
 ```sh
 python -m app.music_reviews
 ```
+
+Run the search review app to search past reviews:
+```sh
+python -m app.search_reviews
+```
+
 
 ## Web App
 
