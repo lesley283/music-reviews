@@ -13,8 +13,13 @@ def reverse_list(original_list, num):
 def load_pickle_data():
     """Load data stored in a pickle file."""
     # load data from pickle file back to memory
-    with open('reviews.pk', 'rb') as rfp:
-        all_reviews = pickle.load(rfp)
+
+    try:
+        with open('reviews.pk', 'rb') as rfp:
+            all_reviews = pickle.load(rfp)
+    except EOFError:
+        all_reviews = [] # if the file is empty, the list of all reviews should just be empty
+
     return all_reviews
 
 def load_matching_reviews(search_input, review_level, all_reviews):

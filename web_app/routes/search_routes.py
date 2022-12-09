@@ -1,8 +1,9 @@
 # this is the "web_app/routes/search_routes.py" file ...
 
-from app.music_reviews import fetch_spotify_data, open_pickle_file
+
 from flask import Blueprint, request, render_template, redirect, flash
-from app.search_reviews import reverse_list, load_pickle_data, load_matching_reviews, reviews_output
+from app.search_reviews import load_pickle_data, load_matching_reviews, reviews_output
+from web_app.request_method import request_method
 
 search_routes = Blueprint("search_routes", __name__)
 
@@ -17,14 +18,7 @@ def search_form():
 def search_validation():
     print("SEARCH VALIDATION...")
 
-    if request.method == "POST":
-        # for data sent via POST request, form inputs are in request.form:
-        request_data = dict(request.form)
-        print("FORM DATA:", request_data)
-    else:
-        # for data sent via GET request, url params are in request.args
-        request_data = dict(request.args)
-        print("URL PARAMS:", request_data)
+    request_data = request_method(request)
 
     name = request_data.get("name")
     name = name.upper() # convert to uppercase to compare to list of reviews (without case sensitivity)
