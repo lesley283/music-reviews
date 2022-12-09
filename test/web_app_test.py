@@ -42,7 +42,7 @@ def test_search_output(test_client):
     response = test_client.get("/search-review/output?review_level=artist&name=Taylor Swift")
     assert response.status_code == 200
     assert b"<h3>Here are reviews we found that match your search criteria...</h3>" in response.data
-    assert b"<p>Here are a list of the most recent reviews...</p>" in response.data
+    assert b"<p>Here is a list of the most recent reviews...</p>" in response.data
 
 def test_past_reviews(test_client):
     # CUSTOMIZED SYMBOL VIA URL PARAMS
