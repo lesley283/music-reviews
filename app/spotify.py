@@ -1,5 +1,6 @@
 # this is the "app/spotify.py" file...
 # load CLIENT_ID and CLIENT_SECRET from the .env file
+# also load the secret FLASK key
 
 import os
 from dotenv import load_dotenv
